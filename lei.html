@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>for lei · quietly pretty</title>
+  <style>
+    /* reset & minimal base */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f9f1f0;  /* soft, warm neutral */
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      line-height: 1.5;
+      color: #3b2b2a;
+    }
+
+    .frame {
+      max-width: 680px;
+      width: 100%;
+      background: rgba(255, 250, 245, 0.8);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border-radius: 36px;
+      box-shadow: 0 20px 40px -15px rgba(140, 80, 70, 0.2);
+      border: 1px solid rgba(230, 200, 190, 0.5);
+      padding: 3rem 2.5rem;
+    }
+
+    /* small flower accent – not overwhelming */
+    .flower-row {
+      display: flex;
+      justify-content: center;
+      gap: 0.4rem 0.8rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.6rem;
+      opacity: 0.75;
+      font-size: 1.6rem;
+      letter-spacing: 2px;
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 450;
+      color: #8c5a4f;
+      text-align: center;
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+
+    .name {
+      text-align: center;
+      font-size: 2.2rem;
+      font-weight: 380;
+      color: #b27b6e;
+      margin-bottom: 2rem;
+      border-bottom: 2px solid #e1c2ba;
+      display: inline-block;
+      padding-bottom: 0.3rem;
+      width: auto;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .card-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* simple pretty slider – no loud emoji, just a clean interaction */
+    .pretty-zone {
+      background: #f6eae6;
+      border-radius: 48px;
+      padding: 2.2rem 1.8rem;
+      margin: 1.8rem 0;
+      width: 100%;
+      border: 1px solid #dbc2ba;
+    }
+
+    .pretty-label {
+      font-size: 1.25rem;
+      font-weight: 380;
+      color: #77544a;
+      text-align: center;
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.3px;
+    }
+
+    .slider-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    /* minimalist slider */
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      max-width: 360px;
+      height: 3px;
+      background: #cfa69b;
+      border-radius: 6px;
+      outline: none;
+      margin: 0.5rem 0 0.3rem;
+    }
+
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #ffffff;
+      border: 2px solid #b48a7e;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      transition: 0.1s;
+    }
+
+    input[type=range]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: #ffffff;
+      border: 2px solid #b48a7e;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    .pretty-display {
+      font-size: 1.8rem;
+      font-weight: 330;
+      color: #7d564b;
+      background: #fff9f5;
+      padding: 0.3rem 1.4rem;
+      border-radius: 60px;
+      border: 1px solid #e3c3ba;
+      box-shadow: inset 0 1px 3px #f0d9d2;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .compliment {
+      font-size: 1.3rem;
+      color: #6d4c43;
+      background: transparent;
+      padding: 0.8rem 0 0.2rem;
+      min-height: 3.5rem;
+      font-weight: 350;
+      border-top: 1px dashed #d9b9af;
+      margin-top: 1rem;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* small flower garden – subtle, just a few */
+    .flower-garden {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 0.8rem 1rem;
+      margin: 2rem 0 0.5rem;
+    }
+
+    .flower-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.9rem;
+      padding: 0.2rem 0.2rem;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.2s;
+      opacity: 0.75;
+      filter: grayscale(10%);
+      line-height: 1;
+    }
+
+    .flower-btn:hover {
+      transform: scale(1.08);
+      opacity: 1;
+      filter: grayscale(0%);
+    }
+
+    .flower-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* note message – clean */
+    .gentle-note {
+      font-size: 1.2rem;
+      color: #7e5b52;
+      background: #fef8f5;
+      border-radius: 36px;
+      padding: 0.9rem 1.6rem;
+      margin: 1.2rem 0 0.8rem;
+      border: 1px solid #e2c7bf;
+      text-align: center;
+      width: 100%;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid #ddc2b9;
+      margin: 1.6rem 0 0.8rem;
+      width: 80px;
+      opacity: 0.6;
+    }
+
+    .footer {
+      font-size: 1rem;
+      color: #9e7b71;
+      font-weight: 300;
+      margin-top: 1rem;
+    }
+
+    /* responsive */
+    @media (max-width: 480px) {
+      .frame { padding: 2rem 1.5rem; }
+      h1 { font-size: 2.4rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <!-- very subtle flowers, just a few -->
+    <div class="flower-row">
+      <span>🌼</span><span>🌸</span><span>🌷</span><span>🌱</span><span>🌿</span>
+    </div>
+
+    <h1>Happy Valentine's</h1>
+    <div style="text-align: center;"><span class="name">Lei</span></div>
+
+    <div class="card-content">
+      <!-- simple pretty meter – understated, genuine -->
+      <div class="pretty-zone">
+        <div class="pretty-label">a quiet measure</div>
+        <div class="slider-container">
+          <input type="range" id="prettySlider" min="0" max="100" value="92" step="1">
+          <span class="pretty-display" id="prettyValue">92%</span>
+        </div>
+        <div class="compliment" id="complimentMsg">you have a calm grace</div>
+      </div>
+
+      <!-- a few flowers, click for a small kind thought -->
+      <div class="flower-garden" id="flowerGarden"></div>
+
+      <!-- simple note updated by flowers -->
+      <div class="gentle-note" id="gentleNote">
+        ⋆｡°✩ just being you is enough ✩°｡⋆
+      </div>
+
+      <hr>
+      <div class="footer">with care · feb 14</div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // ---------- pretty meter – simple, no excess ----------
+      const slider = document.getElementById('prettySlider');
+      const prettySpan = document.getElementById('prettyValue');
+      const complimentDiv = document.getElementById('complimentMsg');
+
+      // compliments – sincere, not overdone
+      const messages = [
+        "you have a quiet loveliness",
+        "there's sincerity in the way you are",
+        "you carry yourself well",
+        "thoughtful & kind",
+        "a genuine presence",
+        "you look like yourself – that's the best",
+        "warm, like morning light",
+        "simply yourself, and that's it",
+        "elegant without trying",
+        "you feel like a familiar melody"
+      ];
+
+      function updateMeter() {
+        const val = parseInt(slider.value, 10);
+        prettySpan.textContent = val + '%';
+
+        // calm, grounded compliments that scale gently
+        if (val >= 95) {
+          complimentDiv.textContent = "completely, quietly yourself ✦";
+        } else if (val >= 80) {
+          complimentDiv.textContent = "you have a natural grace";
+        } else if (val >= 60) {
+          complimentDiv.textContent = "there's a softness about you";
+        } else if (val >= 30) {
+          complimentDiv.textContent = "you're enough as you are";
+        } else {
+          complimentDiv.textContent = "still, you are here – that matters";
+        }
+      }
+
+      slider.addEventListener('input', updateMeter);
+      updateMeter(); // set initial
+
+      // ---------- flower garden – minimal, 5-6 flowers, each with a simple thought ----------
+      const garden = document.getElementById('flowerGarden');
+      // small selection, no overwhelming cuteness
+      const flowerIcons = ['🌼', '🌸', '🌷', '🌱', '🌿', '🌙']; // last one is not a flower, but calm
+      // kind observations, not cringe
+      const quietThoughts = [
+        "you listen well",
+        "your perspective is thoughtful",
+        "i like your honesty",
+        "you have a gentle way",
+        "you don't need to perform",
+        "there's depth in you"
+      ];
+
+      // create 6 clickable elements
+      for (let i = 0; i < 6; i++) {
+        const btn = document.createElement('button');
+        btn.className = 'flower-btn';
+        // pick a flower based on index, but keep it soft
+        btn.textContent = flowerIcons[i % flowerIcons.length];
+        // assign a thought (cycled)
+        const thought = quietThoughts[i % quietThoughts.length];
+        btn.setAttribute('data-thought', thought);
+
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const msg = this.getAttribute('data-thought') || 'just be';
+          document.getElementById('gentleNote').textContent = '✧ ' + msg + ' ✧';
+
+          // very small nudge to slider – subtle, not childish
+          let current = parseInt(slider.value, 10);
+          // increase by 1 to 3 points, never exceed 100
+          let increase = Math.floor(Math.random() * 3) + 1; // 1-3
+          let newVal = Math.min(100, current + increase);
+          slider.value = newVal;
+          updateMeter();
+
+          // subtle animation on note
+          const note = document.getElementById('gentleNote');
+          note.style.transition = 'background 0.2s';
+          note.style.background = '#f2e2db';
+          setTimeout(() => note.style.background = '#fef8f5', 150);
+        });
+
+        garden.appendChild(btn);
+      }
+
+      // extra small touch: if slider changes, we could optionally sync something, but it's fine.
+
+      // optional: set a random quiet message on page load
+      const randomIndex = Math.floor(Math.random() * quietThoughts.length);
+      document.getElementById('gentleNote').textContent = '✧ ' + quietThoughts[randomIndex] + ' ✧';
+    })();
+  </script>
+</body>
+</html>
